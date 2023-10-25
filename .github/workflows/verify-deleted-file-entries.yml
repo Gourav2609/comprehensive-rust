@@ -36,9 +36,9 @@ jobs:
           is_pull_request="${{ env.is_pull_request }}"
           if [ "$is_pull_request" == "true" ]; then
             base_branch=$(jq -r .pull_request.base.ref "$GITHUB_EVENT_PATH")
-            echo "::set-output name=base_branch::$base_branch"
+            echo "base_branch=$base_branch" >> $GITHUB_ENV
           else
-            echo "::set-output name=base_branch::"
+            echo "base_branch=" >> $GITHUB_ENV
           fi
 
       - name: Set deleted slides in an environment file
