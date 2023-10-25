@@ -43,9 +43,10 @@ jobs:
 
       - name: Set deleted slides in an environment file
         run: |
-          echo "DELETED_SLIDES=$(git diff --name-only \"$base_branch\"...HEAD --diff-filter=D)" >> $GITHUB_ENV
-        env:
-          base_branch: ${{ steps.base-branch.outputs.base_branch }}
+          base_branch="${{ env.base_branch }}"
+          if [ -n "$base_branch" ]; then
+            echo "DELETED_SLIDES=$(git diff --name-only \"$base_branch\"...HEAD --diff-filter=D)" >> $GITHUB_ENV
+          fi
 
       - name: Check for entries in book.toml
         run: |
